@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { Suspense, useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stats, OrbitControls, Environment, useGLTF, Clone, Html, ContactShadows } from '@react-three/drei';
-import { useControls } from 'leva';
 
 const Models = [
   { title: 'DIS', url: './DIS.glb', miEscala: .9, miPosicion: 4 },
@@ -46,16 +45,8 @@ function Fallback() {
 export default function EstucheConAsas({ title }) {
   const [currentTitle, setCurrentTitle] = useState(title);
 
-  const { modelo } = useControls('Model', {
-    modelo: {
-      value: title,
-      options: Models.map(({ title }) => title),
-    },
-  });
-
-  useEffect(() => {
-    setCurrentTitle(modelo);
-  }, [modelo]);
+  // Se elimina el control de Leva para ocultar la card 'Model'.
+  // La selección de modelo se mantiene a partir de la prop `title`.
 
   const modelIndex = Models.findIndex((m) => m.title === currentTitle);
   const modelUrl = modelIndex !== -1 ? Models[modelIndex].url : null;

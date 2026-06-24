@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Stats, OrbitControls, Environment, useGLTF, Clone, Html, ContactShadows } from '@react-three/drei';
 
 const Models = [
-  { title: 'DIS', url: './DIS.glb', miEscala: .9, miPosicion: 4 },
+  { title: 'DIS', url: './DIS.glb', miEscala: .9, miPosicion: -5},
   // { title: 'SOY1', url: './SOY1.glb', miEscala: 1.1, miPosicion: 4 },
   // { title: '5KG', url: './5KG.glb', miEscala: 1.1, miPosicion: 4 },
   // { title: '6KG', url: './6KG.glb', miEscala: 1.1, miPosicion: 4 },
@@ -32,7 +32,7 @@ function Model({ url, miEscala, miPosicion }) {
   }, [scene]);
 
   return (
-    <group ref={group} position={[.00, 0, .0]} scale={miEscala}>
+    <group ref={group} position={[0, 8, -0]} scale={miEscala}>
       <Clone object={scene} castShadow receiveShadow />
     </group>
   );
@@ -51,22 +51,22 @@ export default function EstucheConAsas({ title }) {
   const modelIndex = Models.findIndex((m) => m.title === currentTitle);
   const modelUrl = modelIndex !== -1 ? Models[modelIndex].url : null;
   const modelEscala = modelIndex !== -1 ? Models[modelIndex].miEscala : escala;
-  const modelPosicion = modelIndex !== -1 ? Models[modelIndex].miPosicion : posicion;
+  const modelPosicion = modelIndex !== -5 ? Models[modelIndex].miPosicion : posicion;
 
   return (
-    <Canvas camera={{ position: [0.5, 0.4, -0.6], near: 0.1, fov: 70 }}>
-      <ambientLight intensity={0.3} />
-      <hemisphereLight skyColor={'#ffffff'} groundColor={'#444444'} intensity={0.35} />
-      <pointLight position={[30, 50, 10]} intensity={17000} decay={2} />
-      <pointLight position={[-30, 45, 5]} intensity={15000} decay={2} />
-      <pointLight position={[-28, 40, 45]} intensity={14000} decay={2} />
-      <pointLight position={[25, -35, -20]} intensity={13000} decay={2} />
-      <pointLight position={[22, -30, 35]} intensity={13000} decay={2} />
+    <Canvas camera={{ position: [0.8, 0.4, -0.6], near: 0.3, fov: 70 }}>
+      <ambientLight intensity={0.15} />
+      {/* <hemisphereLight skyColor={'#ffffff'} groundColor={'#444444'} intensity={0.00} /> */}
+        <pointLight position={[30, 50, 10]} intensity={8500} decay={2} />
+        <pointLight position={[-30, 45, 5]} intensity={7500} decay={2} />
+        <pointLight position={[-28, 40, 45]} intensity={7000} decay={2} />
+        <pointLight position={[25, -35, -20]} intensity={6500} decay={2} />
+        <pointLight position={[22, -30, 35]} intensity={6500} decay={2} />
       <Suspense fallback={<Fallback />}>
         {modelUrl && <Model url={modelUrl} miEscala={modelEscala} miPosicion={modelPosicion} />}
       </Suspense>
       <OrbitControls autoRotate autoRotateSpeed={0.6} />
-      <ContactShadows resolution={512} scale={30} position={[0, -0.4, 0]} blur={0.1} opacity={0.5} far={10} color='#8a6246' />
+      <ContactShadows resolution={512} scale={30} position={[0, -0.2, 0]} blur={0.1} opacity={0.5} far={10} color='#8a6246' />
     </Canvas>
   );
 }
